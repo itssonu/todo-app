@@ -5,7 +5,7 @@ const validate = (req, res, next) => {
   const errors = validationResult(req).array({ onlyFirstError: true });
   if (errors.length > 0) {
     return apiResponse({
-      statusCode: 400,
+      statusCode: 403,
       error: errors,
       message: 'Validation failed',
       data: [],

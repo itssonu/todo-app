@@ -6,7 +6,7 @@ const apiResponse = ({ statusCode, data, error, message }) => {
           .status(statusCode)
           .json(successResponse({ data, message, statusCode }));
 
-      case 400:
+      case 403:
         return res
           .status(statusCode)
           .json(errorResponse({ error, message, statusCode }));

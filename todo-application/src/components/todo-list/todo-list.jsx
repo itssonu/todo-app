@@ -5,29 +5,12 @@ import { useTodos, useDeleteTodo, useToggleTodo } from '../../hooks/todos';
 import './todo-list.scss';
 
 export const TodoList = () => {
-  const { todos, setTodos, setCompletedCount } = useContext(todoApiContext);
-  const { todoList, error, fetchTodos, completedCount } = useTodos();
-  const { loading: deleteLoading, error: deleteError, deleteTodo, response: deleteResponse } = useDeleteTodo();
-  const { loading: toggleLoading, error: toggleError, toggleTodo, response: toggleResponse } = useToggleTodo();
-  const [deleteIndex, setDeleteIndex] = useState('')
+  const { todos } = useContext(todoApiContext);
+  const { fetchTodos, deleteTodo, toggleTodo, loading } = useTodos();
 
   useEffect(() => {
     fetchTodos()
-  }, [])
-
-  useEffect(() => {
-    setTodos(todoList)
-    setCompletedCount(completedCount)
-  }, [todoList])
-
-  useEffect(() => {
-    fetchTodos()
-  }, [deleteResponse])
-
-  useEffect(() => {
-    fetchTodos()
-  }, [toggleResponse])
-  
+  }, [])  
 
   const handleDelete = async (id) => {
     deleteTodo(id)
@@ -46,6 +29,7 @@ export const TodoList = () => {
   return (
     <div className="todo-list">
       <span className="todo-list-title">Todo List:</span>
+      {/* {loading && <div>Loading .....</div>} */}
       {todos.length ? (
         <div className="todo-list-content">
           {todos.map((todoItem) => (

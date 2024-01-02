@@ -1,28 +1,15 @@
 import {useEffect, useContext, useState} from 'react';
 import TodoApiContext from '../../contexts/todoApiContext';
 import './todo-form.scss';
-import { usePostTodo } from '../../hooks/todos';
+import { usePostTodo, useTodos } from '../../hooks/todos';
 
 export const TodoForm = () => {
-  const { addTodo, setTodos, todos } = useContext(TodoApiContext);
   const [task, setTask] = useState('');
-  const [error, setError] = useState('');
-  const { loading: deleteLoading, error: deleteError, postTodoData, response: postResponse } = usePostTodo(); // Use the delete hook
-
-  useEffect(() => {
-    console.log(postResponse ,'postResponse');
-    setTodos([...todos, postResponse])
-    setTask('')
-    setError('')
-  }, [postResponse])
+  const { postTodoData, error } = useTodos()
   
   const handleAddTodo = async () => {
-    if (!task) {
-      setError('task is required')
-    }else{
-      postTodoData(task)
-    }
-   
+    postTodoData(task)
+    setTask('')
   };
 
   const handleKeyUp = (e) => {
@@ -32,6 +19,7 @@ export const TodoForm = () => {
   };
 
   return (
+    <>
     <div className="todo-form">
       <input
         placeholder="Enter new task"
@@ -39,12 +27,13 @@ export const TodoForm = () => {
         onChange={(e) => setTask(e.target.value)}
         onKeyUp={handleKeyUp}
       />
-      {
-        error &&<span style={{color:'red'}}>{error}</span>
-      }
+      
       <button type="button" onClick={handleAddTodo}>
         Add task
       </button>
+      
     </div>
+    {error && <span>{error?.errorDetails?.[0]?.msg ?? 'something went wrong'}</span>}
+    </>
   );
 };

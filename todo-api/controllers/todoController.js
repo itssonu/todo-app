@@ -14,7 +14,7 @@ export const getAllTodos = async (req, res) => {
     })(res);
   } catch (error) {
     return apiResponse({
-      statusCode: 400,
+      statusCode: 403,
       data: [],
       message: error.message,
     })(res);
@@ -35,7 +35,7 @@ export const createTodo = async (req, res) => {
     })(res);
   } catch (error) {
     return apiResponse({
-      statusCode: 400,
+      statusCode: 403,
       data: [],
       message: error.message,
     })(res);
@@ -66,7 +66,7 @@ export const toggleTodo = async (req, res) => {
     })(res);
   } catch (error) {
     return apiResponse({
-      statusCode: 400,
+      statusCode: 403,
       data: [],
       message: error.message,
     })(res);
