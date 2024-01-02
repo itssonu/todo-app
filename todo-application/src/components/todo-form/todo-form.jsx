@@ -1,13 +1,21 @@
-import * as React from 'react';
+import {useEffect, useContext, useState} from 'react';
 import TodoApiContext from '../../contexts/todoApiContext';
 import './todo-form.scss';
+import { usePostTodo } from '../../hooks/todos';
 
 export const TodoForm = () => {
-  const { addTodo } = React.useContext(TodoApiContext);
-  const [task, setTask] = React.useState('');
+  const { addTodo, setTodos, todos } = useContext(TodoApiContext);
+  const [task, setTask] = useState('');
+  const { loading: deleteLoading, error: deleteError, postTodoData, response: postResponse } = usePostTodo(); // Use the delete hook
 
-  const handleAddTodo = () => {
-    // handle add todo here
+  useEffect(() => {
+    console.log(postResponse ,'postResponse');
+    setTodos([...todos, postResponse])
+    setTask('')
+  }, [postResponse])
+  
+  const handleAddTodo = async () => {
+   postTodoData(task)
   };
 
   const handleKeyUp = (e) => {

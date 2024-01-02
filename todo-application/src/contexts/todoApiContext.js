@@ -6,6 +6,7 @@ const defaultState = {
   deleteTodo: (id) => {},
   addTodo: (todo) => {},
   toggleTodo: (id) => {},
+  setCompletedCount:(todos) =>{}
 };
 
 const TodoApiContext = createContext(defaultState);

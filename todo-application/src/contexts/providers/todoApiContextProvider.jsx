@@ -3,12 +3,16 @@ import TodoApiContext from '../todoApiContext';
 
 function TodoApiContextProvider({ children }) {
   // eslint-disable-next-line no-use-before-define
-  const [{ todos }, dispatch] = useReducer(reducer, {
+  const [{ todos, count }, dispatch] = useReducer(reducer, {
     todos: [],
   });
 
   const setTodos = useCallback(async (todosData) => {
     dispatch({ type: 'TODO_List', data: todosData });
+  }, []);
+
+  const setCompletedCount = useCallback(async (countData) => {
+    dispatch({ type: 'TODO_Count', data: countData });
   }, []);
 
   const deleteTodo = useCallback(async (id) => {
@@ -19,7 +23,9 @@ function TodoApiContextProvider({ children }) {
 
   const todosContextValues = {
     todos,
+    count,
     setTodos,
+    setCompletedCount,
     toggleTodo,
   };
 
@@ -38,6 +44,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         todos: action.data,
+      };
+    case 'TODO_Count':
+      return {
+        ...state,
+        count: action.data,
       };
 
     default:

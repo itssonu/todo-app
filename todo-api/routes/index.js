@@ -1,8 +1,12 @@
-var express = require("express");
-var router = express.Router();
+import express from "express";
+import { createTodoValidation } from "../utils/validation.js";
+import { createTodo, deleteTodo, getAllTodos, toggleTodo } from "../controllers/todoController.js";
 
-router.get("/", function (req, res, next) {
-  res.send({ status: "Api is working" });
-});
+const router = express.Router();
 
-module.exports = router;
+router.get("/", getAllTodos);
+router.post("/", createTodoValidation, createTodo);
+router.delete('/:id', deleteTodo);
+router.put('/:id', toggleTodo);
+
+export default router;

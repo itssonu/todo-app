@@ -42,4 +42,6 @@
 !/var/package
 /var/package/*
 !/var/package/*.xml
+todo-api/node_modules
+todo-application/node_modules
 
